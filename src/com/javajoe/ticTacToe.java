@@ -3,6 +3,7 @@ public class TicTacToe{
 	//1
 	public VictoryState checkForVictor(){
 	// tells who won, and if the game has been won.
+		return null;
 	}
 	//2
 	public void setCell(int iCol, int iRow){
@@ -11,6 +12,7 @@ public class TicTacToe{
 	//3
 	public CellState getCell(int iCol, int iRow){
 	//gets the values of cells for usage in other methods.
+		return null;
 	}
 	//4
 	public void resetGame (){
