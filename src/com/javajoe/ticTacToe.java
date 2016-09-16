@@ -67,13 +67,15 @@ public class TicTacToe{
 
 	//4
 	public void resetGame (){
-	//returns game to initial state state.
+		//returns game to initial state state.
+		initializeCellArray();
 	}
 
 	//5
 	public void endTurn (){
 	//Ends the turn. Somehow.
 	}
+	//Restores the game to initial state.
 	private void initializeCellArray(){
 		for(int iCol = 0; iCol < 3; iCol++){
 			for(int iRow = 0; iRow < 3; iRow++){
