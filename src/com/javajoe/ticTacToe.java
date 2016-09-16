@@ -1,6 +1,7 @@
 public class TicTacToe{
 
 	public CellState[][] cellArray = new CellState[3][3];
+	public Line[] lineArray = new Line[8];
 
 	public enum CellState{
 		X,
@@ -16,6 +17,7 @@ public class TicTacToe{
 
 	public TicTacToe(){
 		initializeCellArray();
+		initializeLineArrray();
 	}// end constructer
 
 	private int cellStateToInt(CellState value){
@@ -84,6 +86,18 @@ public class TicTacToe{
 			}
 		}
 
+	}
+	// Initializes the victory lines columb
+	// 8 statements, each creating a line and asigning it to the correct value.
+	private void initializeLineArrray(){
+		lineArray[0] = new Line (0,0,0,1,0,2);
+		lineArray[1] = new Line (1,0,1,1,1,2);
+		lineArray[2] = new Line (2,0,2,1,2,2);
+		lineArray[3] = new Line (0,0,1,0,2,0);
+		lineArray[4] = new Line (0,1,1,1,2,1);
+		lineArray[5] = new Line (0,2,1,2,2,2);
+		lineArray[6] = new Line (0,0,1,1,2,2);
+		lineArray[7] = new Line (2,0,1,1,0,2);
 	}
 
 // ToDo: VictoryState class and CellState

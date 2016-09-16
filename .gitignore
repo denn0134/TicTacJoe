@@ -41,3 +41,7 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+src/com/javajoe/Line.class
+src/com/javajoe/TicTacToe$1.class
+src/com/javajoe/TicTacToe$CellState.class
+src/com/javajoe/TicTacToe$VictoryState.class
