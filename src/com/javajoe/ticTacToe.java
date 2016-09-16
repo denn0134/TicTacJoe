@@ -7,6 +7,12 @@ public class TicTacToe{
 		O,
 		BLANK
 	}//end CellState
+	public enum VictoryState{
+		XWINS,
+		OWINS,
+		DRAW,
+		ONGOING
+	}
 
 	public TicTacToe(){
 		initializeCellArray();
