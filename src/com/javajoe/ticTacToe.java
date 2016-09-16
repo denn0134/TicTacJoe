@@ -14,7 +14,7 @@ public class TicTacToe{
 		DRAW,
 		ONGOING
 	}
-
+	//constructor.
 	public TicTacToe(){
 		initializeCellArray();
 		initializeLineArrray();
