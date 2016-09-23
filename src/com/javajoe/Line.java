@@ -9,5 +9,17 @@ public class Line{
 		cell2 = new Point(x2, y2);
 		cell3 = new Point(x3, y3);
 	}
+	public Point getCell1(){
+		return cell1;
+
+	}
+	public Point getCell2(){
+		return cell2;
+
+	}
+	public Point getCell3(){
+		return cell3;
+
+	}
 
 }
