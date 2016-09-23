@@ -1,5 +1,6 @@
 public class TicTacToe{
 
+
 	public CellState[][] cellArray = new CellState[3][3];
 	public Line[] lineArray = new Line[8];
 
@@ -98,6 +99,27 @@ public class TicTacToe{
 		lineArray[5] = new Line (0,2,1,2,2,2);
 		lineArray[6] = new Line (0,0,1,1,2,2);
 		lineArray[7] = new Line (2,0,1,1,0,2);
+	}
+	public VictoryState checkLineState(Line line){
+
+		int iOne = cellStateToInt(cellArray [line.getCell1().x][line.getCell1().y]);
+		int iTwo = cellStateToInt(cellArray [line.getCell2().x][line.getCell2().y]);
+		int iThree = cellStateToInt(cellArray [line.getCell3().x][line.getCell3().y]);
+
+		if ( Math.abs(iOne) +  Math.abs(iTwo) +  Math.abs(iThree) == Math.abs( iOne + iTwo + iThree)){
+			return VictoryState.DRAW;
+		}
+		else {
+			if (iOne + iTwo + iThree == 3){
+				return VictoryState.XWINS;
+			}
+			else if (iOne + iTwo + iThree == -3){
+				return VictoryState.OWINS;
+			}
+			else {
+				return VictoryState.ONGOING;
+			}
+		}
 	}
 
 // ToDo: VictoryState class and CellState
