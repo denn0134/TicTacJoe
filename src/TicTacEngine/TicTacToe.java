@@ -69,9 +69,11 @@ public class TicTacToe{
 	//}
 
 	//2
-	public void setCell (int iCol, int iRow) throws TicTacExeption
-	{
-		if (cellArray[iCol][iRow] == CellState.BLANK) {
+	public void setCell (int iCol, int iRow) throws TicTacExeption {
+		if ( checkVictory() != VictoryState.ONGOING ) {
+			throw new GameAlreadyOverException("The game is over");
+
+		} else if (cellArray[iCol][iRow] == CellState.BLANK) {
 
 			if (currentTurn == TurnState.XTURN)
 				cellArray[iCol][iRow] = CellState.X;
