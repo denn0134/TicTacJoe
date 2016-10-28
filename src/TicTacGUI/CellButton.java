@@ -11,6 +11,8 @@ import java.awt.event.ComponentEvent;
 public class CellButton extends JButton
 {
     private ImageIcon _currentIcon;
+    public int column;
+    public int row;
 
     public CellButton(ImageIcon startingIcon){
         super();
@@ -22,20 +24,24 @@ public class CellButton extends JButton
             @Override
             public void componentResized(ComponentEvent e) {
                 JButton btn = (JButton) e.getComponent();
-                Dimension size = btn.getSize();
-                java.awt.Insets insets = btn.getInsets();
-                size.width -= insets.left + insets.right;
-                size.height -= insets.top + insets.bottom;
-
-                if(size.width > size.height)
-                    size.width = -1;
-                else
-                    size.height = -1;
-
-                Image scaled = _currentIcon.getImage().getScaledInstance(size.width, size.height, Image.SCALE_SMOOTH);
-                btn.setIcon(new ImageIcon(scaled));
+                setButtonIcon(btn);
             }
         });
+    }
+
+    private void setButtonIcon(JButton button){
+        Dimension size = button.getSize();
+        java.awt.Insets insets = button.getInsets();
+        size.width -= insets.left + insets.right;
+        size.height -= insets.top + insets.bottom;
+
+        if(size.width > size.height)
+            size.width = -1;
+        else
+            size.height = -1;
+
+        Image scaled = _currentIcon.getImage().getScaledInstance(size.width, size.height, Image.SCALE_SMOOTH);
+        button.setIcon(new ImageIcon(scaled));
     }
 
     public ImageIcon getCurrentIcon(){
@@ -44,5 +50,6 @@ public class CellButton extends JButton
 
     public void setCurrentIcon(ImageIcon value){
         _currentIcon = value;
+        setButtonIcon(this);
     }
 }
