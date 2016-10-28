@@ -4,7 +4,20 @@ public class TicTacToeTest{
 
 	public static void main(String args[]){
 		TicTacToe tester = new TicTacToe();
-		tester.setCell(1,1, TicTacToe.CellState.X);
-		System.out.println("done");
+		System.out.println(tester.getCell(1,1));
+		try {
+			tester.setCell(1, 1);
+		}
+		catch(TicTacExeption tte){
+			System.out.println(tte.getMessage());
+		}
+		System.out.println(tester.getCell(1,1));
+		try {
+			tester.setCell(1, 1);
+		}
+		catch(TicTacExeption tte){
+			System.out.println(tte.getMessage());
+		}
+		System.out.println(tester.getCell(1,1));
 	}
 }
