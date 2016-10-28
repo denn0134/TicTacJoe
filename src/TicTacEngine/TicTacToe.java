@@ -5,12 +5,20 @@ public class TicTacToe{
 
 	public CellState[][] cellArray = new CellState[3][3];
 	public Line[] lineArray = new Line[8];
+	private TurnState currentTurn;
+	public TurnState getCurrentTurn(){
+		return currentTurn;
+	}
 
 	public enum CellState{
 		X,
 		O,
 		BLANK
 	}//end CellState
+	public enum TurnState{
+		XTURN,
+		OTURN
+	}
 	public enum VictoryState{
 		XWINS,
 		OWINS,
@@ -21,6 +29,7 @@ public class TicTacToe{
 	public TicTacToe(){
 		initializeCellArray();
 		initializeLineArrray();
+		currentTurn = TurnState.XTURN;
 	}// end constructer
 
 	private int cellStateToInt(CellState value){
@@ -60,8 +69,23 @@ public class TicTacToe{
 	//}
 
 	//2
-	public void setCell (int iCol, int iRow, CellState newState){
-		cellArray[iCol][iRow] = newState;
+	public void setCell (int iCol, int iRow) throws TicTacExeption
+	{
+		if (cellArray[iCol][iRow] == CellState.BLANK) {
+
+			if (currentTurn == TurnState.XTURN)
+				cellArray[iCol][iRow] = CellState.X;
+			else
+				cellArray[iCol][iRow] = CellState.O;
+			if (currentTurn == TurnState.XTURN)
+				currentTurn = TurnState.OTURN;
+			else
+				currentTurn = TurnState.XTURN;
+		}
+		else{
+			throw new ButtonAlreadySetException("you must pick a blank square");
+		}
+
 	}
 
 	//3
@@ -74,12 +98,10 @@ public class TicTacToe{
 	public void resetGame (){
 		//returns game to initial state state.
 		initializeCellArray();
+		currentTurn = TurnState.XTURN;
 	}
 
-	//5
-	public void endTurn (){
-	//Ends the turn. Somehow.
-	}
+
 	//Restores the game to initial state.
 	private void initializeCellArray(){
 		for(int iCol = 0; iCol < 3; iCol++){
@@ -108,7 +130,7 @@ public class TicTacToe{
 		int iTwo = cellStateToInt(cellArray [line.getCell2().x][line.getCell2().y]);
 		int iThree = cellStateToInt(cellArray [line.getCell3().x][line.getCell3().y]);
 
-		if ( Math.abs(iOne) +  Math.abs(iTwo) +  Math.abs(iThree) == Math.abs( iOne + iTwo + iThree)){
+		if ( Math.abs(iOne) +  Math.abs(iTwo) +  Math.abs(iThree) != Math.abs( iOne + iTwo + iThree)){
 			return VictoryState.DRAW;
 		}
 		else {
@@ -122,6 +144,30 @@ public class TicTacToe{
 				return VictoryState.ONGOING;
 			}
 		}
+	}
+
+	public VictoryState checkVictory (){
+		VictoryState result = VictoryState.ONGOING;
+		int iDrawCount = 0;
+		for(int i = 0; i < lineArray.length; i++){
+			switch (checkLineState(lineArray[i])) {
+				case XWINS:
+					result = VictoryState.XWINS;
+					break;
+				case OWINS:
+					result =VictoryState.OWINS;
+					break;
+				case DRAW:
+					iDrawCount++;
+					break;
+			}
+			if ((result == VictoryState.XWINS) || (result == VictoryState.OWINS))
+				break;
+
+		}
+		if (iDrawCount == lineArray.length)
+			result = VictoryState.DRAW;
+		return result;
 	}
 
 // ToDo: VictoryState class and CellState
