@@ -1,4 +1,4 @@
-package TicTacEngine;
+import TicTacEngine.*;
 
 public class TicTacToeTest{
 

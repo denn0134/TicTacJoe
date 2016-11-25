@@ -1,4 +1,4 @@
-package TicTacGUI;
+import TicTacGUI.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,8 +14,12 @@ import TicTacEngine.*;
 public class TicTacJoeGUI extends JFrame {
     private JPanel pnlBoard;
     private JPanel pnlControls;
+    private JPanel pnlPlayerMode;
+    private JButton btn2Player;
+    private JButton btn1Player;
     private CellButton[][] btnCells = new CellButton[3][3];
     private JButton btnReset;
+
 
     private TicTacToe engine;
 
@@ -39,8 +43,13 @@ public class TicTacJoeGUI extends JFrame {
 
         pnlControls = new JPanel();
         pnlControls.setLayout(new BorderLayout());
-        pnlControls.setSize(600, 200);
+        pnlControls.setSize(600, 600);
         c.add(pnlControls, BorderLayout.SOUTH);
+
+        pnlPlayerMode = new JPanel();
+        pnlPlayerMode.setLayout(new GridLayout(1,2,10,50));
+        pnlPlayerMode.setSize(600,800);
+        c.add(pnlPlayerMode, BorderLayout.CENTER);
 
         for (int i = 0; i < btnCells.length; i++) {
             for (int j = 0; j < btnCells[0].length; j++) {
@@ -60,7 +69,22 @@ public class TicTacJoeGUI extends JFrame {
         btnReset.addActionListener(new ResetHandler());
         pnlControls.add(btnReset, BorderLayout.SOUTH);
 
-        setSize(600, 800);
+        btn2Player = new JButton("2 Player?");
+        btn2Player.setPreferredSize(new Dimension(200,300));
+        btn2Player.addActionListener(new PlayerModeHandler());
+        pnlPlayerMode.add(btn2Player);
+
+        btn1Player = new JButton("Play vs Computer?");
+        btn1Player.setPreferredSize(new Dimension(200,300));
+        btn1Player.addActionListener(new PlayerModeHandler());
+        pnlPlayerMode.add(btn1Player);
+
+        pnlBoard.setVisible(false);
+        pnlControls.setVisible(false);
+
+
+
+       setSize(600, 800);
         show();
     }//end Main
 
@@ -105,8 +129,11 @@ public class TicTacJoeGUI extends JFrame {
     private class ResetHandler implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            engine.resetGame();
-            refreshGUI();
+
+            pnlPlayerMode.setVisible(true);
+            pnlBoard.setVisible(false);
+            pnlControls.setVisible(false);
+
         }
     }
 
@@ -131,6 +158,24 @@ public class TicTacJoeGUI extends JFrame {
                 JOptionPane.showMessageDialog(null, tte.getMessage());
             }
 
+        }
+    }
+    private class PlayerModeHandler implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JButton jbutton;
+            jbutton = (JButton) e.getSource();
+            if (jbutton == btn1Player) {
+                engine.gameMode = TicTacToe.GameMode.ONEPLAYER;
+            } else {
+                engine.gameMode = TicTacToe.GameMode.TWOPLAYER;
+
+            }
+            pnlPlayerMode.setVisible(false);
+            pnlBoard.setVisible(true);
+            pnlControls.setVisible(true);
+            engine.resetGame();
+            refreshGUI();
         }
     }
 }
