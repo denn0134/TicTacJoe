@@ -1,5 +1,7 @@
 package TicTacEngine;
 
+import com.sun.media.jfxmedia.events.PlayerStateEvent;
+
 public class TicTacToe{
 
 
@@ -9,6 +11,7 @@ public class TicTacToe{
 	public TurnState getCurrentTurn(){
 		return currentTurn;
 	}
+	public GameMode gameMode;
 
 	public enum CellState{
 		X,
@@ -24,6 +27,10 @@ public class TicTacToe{
 		OWINS,
 		DRAW,
 		ONGOING
+	}
+	public enum GameMode{
+		ONEPLAYER,
+		TWOPLAYER
 	}
 	//constructor.
 	public TicTacToe(){
