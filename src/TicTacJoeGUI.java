@@ -16,7 +16,8 @@ public class TicTacJoeGUI extends JFrame {
     private JPanel pnlControls;
     private JPanel pnlPlayerMode;
     private JButton btn2Player;
-    private JButton btn1Player;
+    private JButton btnC1stPlayer;
+    private JButton btnH1stPlayer;
     private CellButton[][] btnCells = new CellButton[3][3];
     private JButton btnReset;
 
@@ -47,7 +48,7 @@ public class TicTacJoeGUI extends JFrame {
         c.add(pnlControls, BorderLayout.SOUTH);
 
         pnlPlayerMode = new JPanel();
-        pnlPlayerMode.setLayout(new GridLayout(1,2,10,50));
+        pnlPlayerMode.setLayout(new GridLayout(1,3));
         pnlPlayerMode.setSize(600,800);
         c.add(pnlPlayerMode, BorderLayout.CENTER);
 
@@ -74,10 +75,15 @@ public class TicTacJoeGUI extends JFrame {
         btn2Player.addActionListener(new PlayerModeHandler());
         pnlPlayerMode.add(btn2Player);
 
-        btn1Player = new JButton("Play vs Computer?");
-        btn1Player.setPreferredSize(new Dimension(200,300));
-        btn1Player.addActionListener(new PlayerModeHandler());
-        pnlPlayerMode.add(btn1Player);
+        btnC1stPlayer = new JButton("Computer goes first?");
+        btnC1stPlayer.setPreferredSize(new Dimension(200,300));
+        btnC1stPlayer.addActionListener(new PlayerModeHandler());
+        pnlPlayerMode.add(btnC1stPlayer);
+
+        btnH1stPlayer = new JButton("Human goes first?");
+        btnH1stPlayer.setPreferredSize(new Dimension(200,300));
+        btnH1stPlayer.addActionListener(new PlayerModeHandler());
+        pnlPlayerMode.add(btnH1stPlayer);
 
         pnlBoard.setVisible(false);
         pnlControls.setVisible(false);
@@ -165,7 +171,9 @@ public class TicTacJoeGUI extends JFrame {
         public void actionPerformed(ActionEvent e) {
             JButton jbutton;
             jbutton = (JButton) e.getSource();
-            if (jbutton == btn1Player) {
+            if (jbutton == btnC1stPlayer) {
+                engine.gameMode = TicTacToe.GameMode.ONEPLAYER;
+            } else if(jbutton == btnH1stPlayer){
                 engine.gameMode = TicTacToe.GameMode.ONEPLAYER;
             } else {
                 engine.gameMode = TicTacToe.GameMode.TWOPLAYER;

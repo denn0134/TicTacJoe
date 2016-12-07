@@ -178,6 +178,14 @@ public class TicTacToe{
 			result = VictoryState.DRAW;
 		return result;
 	}
+	public void computerMove{
+		//First, check if we can win.
+
+		//Now, check if we can block.
+
+		//things gert murky from here.
+			//Just chose a random space.
+	}
 
 // ToDo: VictoryState class and CellState
 	//  CellState has 3 pices of data, all public. 3 connstants, X,O,[BLANK]
