@@ -2,6 +2,8 @@ package TicTacEngine;
 
 import com.sun.media.jfxmedia.events.PlayerStateEvent;
 
+import java.awt.*;
+
 public class TicTacToe{
 
 
@@ -178,20 +180,118 @@ public class TicTacToe{
 			result = VictoryState.DRAW;
 		return result;
 	}
-	public void computerMove{
-		//First, check if we can win.
 
-		//Now, check if we can block.
-
-		//things gert murky from here.
-			//Just chose a random space.
+	private int specialRandom(int iRange){
+		return (int) (Math.random() * iRange);
 	}
 
-// ToDo: VictoryState class and CellState
-	//  CellState has 3 pices of data, all public. 3 connstants, X,O,[BLANK]
-	//Victory condition has 4: X won, O won, DRAW, and ONGOING
-	// Method on this one for ending turns
+	public void computerMove(){
+		Point p;
+		//checking if it can win
+		for(int i=0; i < lineArray.length; i++) {
+			p = possibleVictory( currentTurn , lineArray[i]);
+			if(p != null) {
+				try{
+					setCell(p.x,p.y);
+				}catch(TicTacExeption tte){
+					// supressing it, because it will probably never happen.
+				}
+				return;
+			}
+		}
 
+		//Checking if it can block
+		for(int i=0; i < lineArray.length; i++) {
+			p = possibleBlock( currentTurn , lineArray[i]);
+			if(p != null) {
+				try{
+					setCell(p.x,p.y);
+				}catch(TicTacExeption tte){
+					// supressing it, because it will probably never happen.
+				}
+				return;
+			}
+		}
+
+		//things gert murky from here.
+		boolean bExeptionOcured = true;
+		while(bExeptionOcured == true) {
+			try {
+				setCell(specialRandom(3), specialRandom(3));
+				bExeptionOcured =false;
+			} catch (TicTacExeption tte ) {
+				bExeptionOcured = true;
+			}
+		}
+	}
+
+	public Point possibleVictory(TicTacToe.TurnState whosVictory, Line line) {
+		Point result = null;
+
+		//turns the turnState into the cell state we are looking for.
+		TicTacToe.CellState whatWins;
+		if(whosVictory == TicTacToe.TurnState.XTURN){
+			whatWins = TicTacToe.CellState.X;
+		}
+		else{
+			whatWins = TicTacToe.CellState.O;
+		}
+
+		//gets the cellStates for the cells in a line.
+		TicTacToe.CellState cell1;
+		TicTacToe.CellState cell2;
+		TicTacToe.CellState cell3;
+		cell1 = getCell(line.getCell1().x,line.getCell1().y);
+		cell2 = getCell(line.getCell2().x,line.getCell2().y);
+		cell3 = getCell(line.getCell3().x,line.getCell3().y);
+
+		//Checks weather the line has two Os and an blank, and then tells you what cell is blank.
+		if(((cell1 == CellState.BLANK) && (cell2 == whatWins) && (cell3 == whatWins))){
+			result = line.getCell1();
+		}
+		else if(((cell1 == whatWins) && (cell2 == CellState.BLANK) && (cell3 == whatWins))){
+			result = line.getCell2();
+		}
+		else if(((cell1 == whatWins) && (cell2 == whatWins) && (cell3 == CellState.BLANK))){
+			result = line.getCell3();
+		}
+
+		return result;
+	}
+	public Point possibleBlock(TicTacToe.TurnState whosBlock, Line line){
+		Point result = null;
+
+		//turns the turnState into the cell state we are looking for.
+		TicTacToe.CellState whatWins;
+		if(whosBlock == TicTacToe.TurnState.XTURN){
+			whatWins = TicTacToe.CellState.O;
+		}
+		else{
+			whatWins = TicTacToe.CellState.X;
+		}
+
+		//gets the cellStates for the cells in a line.
+		TicTacToe.CellState cell1;
+		TicTacToe.CellState cell2;
+		TicTacToe.CellState cell3;
+		cell1 = getCell(line.getCell1().x,line.getCell1().y);
+		cell2 = getCell(line.getCell2().x,line.getCell2().y);
+		cell3 = getCell(line.getCell3().x,line.getCell3().y);
+
+		//Checks weather the line has two Os and an blank, and then tells you what cell is blank.
+		if(((cell1 == CellState.BLANK) && (cell2 == whatWins) && (cell3 == whatWins))){
+			result = line.getCell1();
+		}
+		else if(((cell1 == whatWins) && (cell2 == CellState.BLANK) && (cell3 == whatWins))){
+			result = line.getCell2();
+		}
+		else if(((cell1 == whatWins) && (cell2 == whatWins) && (cell3 == CellState.BLANK))){
+			result = line.getCell3();
+		}
+
+		return result;
+
+	}
 
 }
 

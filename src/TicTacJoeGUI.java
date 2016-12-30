@@ -158,7 +158,18 @@ public class TicTacJoeGUI extends JFrame {
                     JOptionPane.showMessageDialog(null, "O has won");
                 else if(victoryState == TicTacToe.VictoryState.DRAW)
                     JOptionPane.showMessageDialog(null, "DRAW");
+                else if (engine.gameMode!= TicTacToe.GameMode.TWOPLAYER) {
+                    engine.computerMove();
+                    refreshGUI();
+                    victoryState = engine.checkVictory();
+                    if(victoryState == TicTacToe.VictoryState.XWINS)
+                        JOptionPane.showMessageDialog(null, "X has won");
+                    else if(victoryState == TicTacToe.VictoryState.OWINS)
+                        JOptionPane.showMessageDialog(null, "O has won");
+                    else if(victoryState == TicTacToe.VictoryState.DRAW)
+                        JOptionPane.showMessageDialog(null, "DRAW");
 
+                }
             }
             catch (TicTacExeption tte){
                 JOptionPane.showMessageDialog(null, tte.getMessage());
@@ -184,6 +195,10 @@ public class TicTacJoeGUI extends JFrame {
             pnlControls.setVisible(true);
             engine.resetGame();
             refreshGUI();
+            if (jbutton == btnC1stPlayer){
+                engine.computerMove();
+                refreshGUI();
+            }
         }
     }
 }
