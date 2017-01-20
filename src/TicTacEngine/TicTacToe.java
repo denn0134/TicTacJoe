@@ -3,6 +3,7 @@ package TicTacEngine;
 import com.sun.media.jfxmedia.events.PlayerStateEvent;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class TicTacToe{
 
@@ -187,6 +188,7 @@ public class TicTacToe{
 
 	public void computerMove(){
 		Point p;
+		//1
 		//checking if it can win
 		for(int i=0; i < lineArray.length; i++) {
 			p = possibleVictory( currentTurn , lineArray[i]);
@@ -201,6 +203,7 @@ public class TicTacToe{
 		}
 
 		//Checking if it can block
+		//2
 		for(int i=0; i < lineArray.length; i++) {
 			p = possibleBlock( currentTurn , lineArray[i]);
 			if(p != null) {
@@ -212,8 +215,28 @@ public class TicTacToe{
 				return;
 			}
 		}
+		//3 Create a fork if you can
+		p = possibleFork(currentTurn);
+		if(p != null) {
+			try {
+				setCell(p.x, p.y);
+			} catch (TicTacExeption tte) {
+				//Sypressing it because it will not happen.
+			}
+			return;
+		}
+		//4 block a fork if you can
+
+		//5 Center
+
+		//6 Oposite corner if oponent picks one
+
+		//7 empty corner
+
+		//8 empty side
 
 		//things gert murky from here.
+		//N. Eventualy it will be gone.
 		boolean bExeptionOcured = true;
 		while(bExeptionOcured == true) {
 			try {
@@ -292,6 +315,57 @@ public class TicTacToe{
 		return result;
 
 	}
+	public Point possibleFork(TicTacToe.TurnState whosFork){
+		Point result = null;
+
+		ArrayList<Line> canidates = new ArrayList<Line>();
+
+		for(int i = 0; i < lineArray.length ; i++){
+			if(checkLineForSingleValue(lineArray[i], whosFork  ) )
+				canidates.add(lineArray[i]);
+		}
+		for(int i= 0 ; i < canidates.size() ; i++ ){
+			for(int j = i+1; j < canidates.size(); j++){
+				result = canidates.get(i).getIntersection(canidates.get(j));
+				if( result != null && getCell(result.x, result.y) == CellState.BLANK){
+					return result;
+				}
+				else result = null;
+			}
+		}
+		return result;
+	}
+	public boolean checkLineForSingleValue(Line line, TicTacToe.TurnState cellLookedFor){
+		TicTacToe.CellState goal;
+		if(cellLookedFor == TicTacToe.TurnState.XTURN){
+			goal  = TicTacToe.CellState.X;
+		}
+		else{
+			goal = TicTacToe.CellState.O;
+		}
+
+		//gets the cellStates for the cells in a line.
+		TicTacToe.CellState cell1;
+		TicTacToe.CellState cell2;
+		TicTacToe.CellState cell3;
+		cell1 = getCell(line.getCell1().x,line.getCell1().y);
+		cell2 = getCell(line.getCell2().x,line.getCell2().y);
+		cell3 = getCell(line.getCell3().x,line.getCell3().y);
+
+		if(((cell1 == goal) && (cell2 == CellState.BLANK) && (cell3 == CellState.BLANK))){
+			return true;
+		}
+		else if(((cell1 == CellState.BLANK) && (cell2 == goal) && (cell3 == CellState.BLANK))){
+			return true;
+		}
+		else if(((cell1 == CellState.BLANK) && (cell2 == CellState.BLANK) && (cell3 == goal))){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
 
 }
 
