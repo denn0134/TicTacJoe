@@ -221,19 +221,70 @@ public class TicTacToe{
 			try {
 				setCell(p.x, p.y);
 			} catch (TicTacExeption tte) {
-				//Sypressing it because it will not happen.
+				//Supressing it because it will not happen.
 			}
 			return;
 		}
 		//4 block a fork if you can
+		p = possibleFork((currentTurn == TurnState.XTURN) ? TurnState.OTURN : TurnState.XTURN);
 
-		//5 Center
+		if(p != null) {
+			try {
+				setCell(p.x, p.y);
+			} catch (TicTacExeption tte) {
+				//Supressing it because it will not happen.
+			}
+			return;
+		}
+		//5 For the opening move
+		if (firstTurnOrNot()== true) {
+			try {
+				setCell(0, 0);
+			} catch (TicTacExeption tte) {
+				//Supress
+			}
+		}
 
+		else {// Center
+			try {
+				setCell(1, 1);
+			} catch (TicTacExeption tte) {
+				return;
+			}
+		}
 		//6 Oposite corner if oponent picks one
 
 		//7 empty corner
+		if (cellArray[0][0] == CellState.BLANK){
+			try{
+				setCell(0,0);
+			}catch(TicTacExeption tte){
 
-		//8 empty side
+			}
+		}else if(cellArray[0][2] == CellState.BLANK){
+			try{
+				setCell(0,2);
+			}catch(TicTacExeption tte){
+
+			}
+		}else if(cellArray[2][0] == CellState.BLANK){
+			try{
+				setCell(2,0);
+			}catch(TicTacExeption tte){
+
+			}
+		}else if(cellArray[2][2] == CellState.BLANK) {
+			try{
+				setCell(2,2);
+			}catch(TicTacExeption tte){
+
+			}
+		}
+
+
+
+
+			//8 empty side
 
 		//things gert murky from here.
 		//N. Eventualy it will be gone.
@@ -365,7 +416,16 @@ public class TicTacToe{
 			return false;
 		}
 	}
-
+	public boolean firstTurnOrNot (){
+		boolean answer = true;
+		for(int i = 0; i < cellArray.length; i++){
+			for( int j = 0; cellArray[0].length <2; j++) {
+				if(cellArray[i][j] != CellState.BLANK)
+					return false;
+			}
+		}
+		return answer;
+	}
 
 }
 
