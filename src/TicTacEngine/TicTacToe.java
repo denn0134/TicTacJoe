@@ -215,8 +215,6 @@ public class TicTacToe{
 				return;
 			}
 		}
-		//special case XOX Diagonaly.
-
 		//3 Create a fork if you can
 		p = possibleFork(currentTurn);
 		if(p != null) {
@@ -244,9 +242,7 @@ public class TicTacToe{
 				setCell(0, 0);
 			} catch (TicTacExeption tte) {
 				//Supress
-
 			}
-			return;
 		}
 
 		else {// Center
@@ -283,7 +279,6 @@ public class TicTacToe{
 			}catch(TicTacExeption tte){
 
 			}
-			return;
 		}
 
 
@@ -428,17 +423,6 @@ public class TicTacToe{
 				if(cellArray[i][j] != CellState.BLANK)
 					return false;
 			}
-		}
-		return answer;
-	}
-	public boolean specialCaseOrNot (){
-		boolean answer = false;
-		if(cellArray[0][0] == CellState.X && cellArray[1][1] == CellState.O && cellArray[2][2] == CellState.X){
-			answer = true;
-		}else if(cellArray[2][0] == CellState.X && cellArray[1][1] == CellState.O && cellArray[0][2] == CellState.X){
-			answer = true;
-		}else{
-			answer = false;
 		}
 		return answer;
 	}
