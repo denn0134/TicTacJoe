@@ -24,9 +24,9 @@ public class TicTacJoeGUI extends JFrame {
 
     private TicTacToe engine;
 
-    private ImageIcon xIcon = new ImageIcon("D:\\Dev\\JavaJoe\\TicTacJoe\\images\\X.png");
-    private ImageIcon oIcon = new ImageIcon("D:\\Dev\\JavaJoe\\TicTacJoe\\images\\O.png");
-    private ImageIcon blankIcon = new ImageIcon("D:\\Dev\\JavaJoe\\TicTacJoe\\images\\Blank.png");
+    private ImageIcon xIcon = new ImageIcon("C:\\Joey's coding stuf\\TicTacJoe\\images\\X.png");//"C:\\Joey's coding stuf\\TicTacJoe\\images\\X.png"
+    private ImageIcon oIcon = new ImageIcon("C:\\Joey's coding stuf\\TicTacJoe\\images\\O.png");//"C:\\Joey's coding stuf\\TicTacJoe\\images\\O.png"
+    private ImageIcon blankIcon = new ImageIcon("C:\\Joey's coding stuf\\TicTacJoe\\images\\Blank.png");//"C:\\Joey's coding stuf\\TicTacJoe\\images\\Blank.png"
 
     public TicTacJoeGUI() {
         super("Tic-Tac-Toe");
