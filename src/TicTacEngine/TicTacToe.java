@@ -1,7 +1,6 @@
 package TicTacEngine;
 
-import com.sun.media.jfxmedia.events.PlayerStateEvent;
-
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -89,6 +88,7 @@ public class TicTacToe{
 				cellArray[iCol][iRow] = CellState.X;
 			else
 				cellArray[iCol][iRow] = CellState.O;
+
 			if (currentTurn == TurnState.XTURN)
 				currentTurn = TurnState.OTURN;
 			else
@@ -202,6 +202,7 @@ public class TicTacToe{
 			}
 		}
 
+
 		//Checking if it can block
 		//2
 		for(int i=0; i < lineArray.length; i++) {
@@ -215,6 +216,8 @@ public class TicTacToe{
 				return;
 			}
 		}
+
+
 		//3 Create a fork if you can
 		p = possibleFork(currentTurn);
 		if(p != null) {
@@ -237,45 +240,75 @@ public class TicTacToe{
 			return;
 		}
 		//5 For the opening move
-		if (firstTurnOrNot()== true) {
+		if (findTurnNumber()== 1) {
+		//if(false){
 			try {
 				setCell(0, 0);
+
 			} catch (TicTacExeption tte) {
-				//Supress
+				JOptionPane.showMessageDialog(null, "The opening move should not have any nonblank cells, but it does. Odd", "FATAL Error ", JOptionPane.ERROR_MESSAGE);
+
 			}
+			return;
 		}
 
 		else {// Center
 			try {
 				setCell(1, 1);
-			} catch (TicTacExeption tte) {
 				return;
+			} catch (TicTacExeption tte) {
+				//supress
 			}
 		}
-		//6 Oposite corner if oponent picks one
+		//6 Oposite corner if oponent picks one.
+		//the computer has the center, the human has a corner, and the rest are blank, take oposite corner.
+		if (cellArray[1][1]==CellState.X && findTurnNumber() == 3) {
+			try {
 
+
+				if (cellArray[0][0] == CellState.O) {
+					setCell(2, 2);
+					return;
+				} else if (cellArray[2][0] == CellState.O) {
+					setCell(0, 2);
+					return;
+				} else if (cellArray[0][2] == CellState.O) {
+					setCell(2, 0);
+					return;
+				} else if (cellArray[2][2] == CellState.O) {
+					setCell(0, 0);
+					return;
+				}
+			} catch (TicTacExeption tte) {
+
+			}
+		}
 		//7 empty corner
 		if (cellArray[0][0] == CellState.BLANK){
 			try{
 				setCell(0,0);
+				return;
 			}catch(TicTacExeption tte){
 
 			}
 		}else if(cellArray[0][2] == CellState.BLANK){
 			try{
 				setCell(0,2);
+				return;
 			}catch(TicTacExeption tte){
 
 			}
 		}else if(cellArray[2][0] == CellState.BLANK){
 			try{
 				setCell(2,0);
+				return;
 			}catch(TicTacExeption tte){
 
 			}
 		}else if(cellArray[2][2] == CellState.BLANK) {
 			try{
 				setCell(2,2);
+				return;
 			}catch(TicTacExeption tte){
 
 			}
@@ -416,15 +449,15 @@ public class TicTacToe{
 			return false;
 		}
 	}
-	public boolean firstTurnOrNot (){
-		boolean answer = true;
+	public int findTurnNumber(){
+		int iAnswer = 1;
 		for(int i = 0; i < cellArray.length; i++){
-			for( int j = 0; cellArray[0].length <2; j++) {
+			for( int j = 0; j < cellArray[0].length; j++) {
 				if(cellArray[i][j] != CellState.BLANK)
-					return false;
+					iAnswer++;
 			}
 		}
-		return answer;
+		return iAnswer;
 	}
 
 }
