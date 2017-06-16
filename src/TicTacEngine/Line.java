@@ -32,12 +32,12 @@ public class Line{
 		}
 		if (cell2.equals(line.cell1)||cell2.equals(line.cell2)||cell2.equals(line.cell3)){
 			iCount++;
-			match = cell1;
+			match = cell2;
 
 		}
 		if (cell3.equals(line.cell1)||cell3.equals(line.cell2)||cell3.equals(line.cell3)){
 			iCount++;
-			match = cell1;
+			match = cell3;
 
 		}
 		if(iCount == 1)
